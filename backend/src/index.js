@@ -18,12 +18,18 @@ mongoose.connect(process.env.MONGODB_URI)
     })
 
 app.get('/', (req, res) => {
-    res.send('Hello, world!');
+    throw new Error('it is an error')
+    // res.send('Hello, world!');
 })
 
 app.post('/', (req, res) => {
     console.log(req.body);
     res.json(req.body);
+})
+
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send(err.message || '서버에서 에러 발생');
 })
 
 app.use(express.static(path.join(__dirname, 'uploads')))
