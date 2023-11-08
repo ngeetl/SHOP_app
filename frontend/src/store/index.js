@@ -3,14 +3,13 @@ import userReducer from './userSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer, PAUSE, PERSIST, FLUSH, REHYDRATE } from 'redux-persist'
 
-
 const rootReducer = combineReducers({
   user: userReducer,
 })
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage //로컬스토리지
 }
 
  const persistedReducer = persistReducer(persistConfig, rootReducer)
