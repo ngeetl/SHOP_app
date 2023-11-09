@@ -18,8 +18,7 @@ mongoose.connect(process.env.MONGODB_URI)
     })
 
 app.get('/', (req, res) => {
-    throw new Error('it is an error')
-    // res.send('Hello, world!');
+    res.send('Hello, world!');
 })
 
 app.post('/', (req, res) => {
