@@ -1,14 +1,42 @@
 import React from 'react'
+import { useForm } from "react-hook-form"
 
 
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({ mode: 'onChange'})
+
+  const onSubmit = ({ email, password, name }) => {
+    
+    reset();
+  }
+
+  // register 양식
+  const userEmail = {
+    required: "이메일을 입력해 주세요."
+  }
+  const userName = {
+    required: "이름을 입력해 주세요."
+  }
+  const userPassword = {
+    required: "비밀번호를 입력해 주세요.",
+    minLength: {
+      value: 6,
+      message: "최소 6자리 이상의 번호를 입력해 주세요."
+    }
+  }
+
   return (
     <section className='flex flex-col justify-center mt-20 max-w-[500px] m-auto'>
       <div className='p-10 bg-white rounded-md shadow-md border-t-[1px]'>
         <h1 className='text-3xl font-semibold text-center mb-4'>
           회원가입
         </h1>
-        <form className='mb-6'>
+        <form className='mb-6' onSubmit={handleSubmit(onSubmit)}>
           <div className='mb-2'>
             <label
               htmlFor='email'
@@ -17,8 +45,17 @@ const RegisterPage = () => {
             <input 
               type='email'
               id='email'
-              className='w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-300'
+              className='focus:outline-none focus:ring-2 w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-300'
+              {...register('email', userEmail)}
             />
+            {
+              errors?.email &&
+              <div>
+                <span className='text-red-500 pt-4 text-xs'>
+                  {errors.email.message}
+                </span>
+              </div>
+            }
           </div>
           <div className='mb-2'>
             <label
@@ -28,8 +65,17 @@ const RegisterPage = () => {
             <input 
               type='text'
               id='name'
-              className='w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-200'
+              className='focus:outline-none focus:ring-2 w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-200'
+              {...register('name', userName)}
             />
+           {
+              errors?.name &&
+              <div>
+                <span className='text-red-500 pt-4 text-xs'>
+                  {errors.name.message}
+                </span>
+              </div>
+            }
           </div>
           <div className='mb-2'>
             <label
@@ -39,8 +85,17 @@ const RegisterPage = () => {
             <input 
               type='password'
               id='pw'
-              className='w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-200'
+              className='focus:outline-none focus:ring-2 w-full px-4 py-2 mt-2 bg-white border-2 rounded-md border-gray-200'
+              {...register('password', userPassword)}
             />
+            {
+              errors?.password &&
+              <div>
+                <span className='text-red-500 pt-4 text-xs'>
+                  {errors.password.message}
+                </span>
+              </div>
+            }
           </div>
 
           <div className='mt-6'>
