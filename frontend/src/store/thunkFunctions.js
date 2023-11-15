@@ -18,3 +18,19 @@ export const registerUser = createAsyncThunk(
     }
 )
 
+export const loginUser = createAsyncThunk(
+    'user/loginUser', //액션 고유 실별자
+    async (body, thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/login`,
+                body
+            )
+
+            return response.data; //페이로드
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
