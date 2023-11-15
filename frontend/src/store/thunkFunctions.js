@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../utils/axios";
 
 export const registerUser = createAsyncThunk(
     'user/registerUser', //액션 고유 실별자
     async (body, thunkAPI) => {
         try {
             const response = await axiosInstance.post(
-                `/user/register`,
+                `/users/register`,
                 body
             )
 

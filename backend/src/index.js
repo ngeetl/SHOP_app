@@ -21,10 +21,7 @@ app.get('/', (req, res) => {
     res.send('Hello, world!');
 })
 
-app.post('/', (req, res) => {
-    console.log(req.body);
-    res.json(req.body);
-})
+app.use('/users', require('./routes/users'));
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500);

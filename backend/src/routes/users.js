@@ -1,26 +1,18 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const User = require('../models/User');
 
-const userSchema = mongoose.Schema({
-    name: {
-        type: String,
-        maxLength: 50
-    },
-    email: {
-        type: String,
-        trim: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        minLength: 5
-    },
-    role: {
-        type: Number,
-        default: 0
-    },
-    image: String //중괄호 없이 바로 타입 입력 가능
-})
+const router = express.Router();
 
-const User = mongoose.model("User", userSchema);
+router.post('/register', async (req, res, next) => {
+    try {
+        const user = new User(req.body);
+        await user.save();
+        return res.sendStatus(200);
+    } catch (err) {
+        next(err)
+    }
+});
 
-module.exports = User;
+
+module.exports = router;
+
