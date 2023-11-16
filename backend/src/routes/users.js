@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-
+const jwt = require('jsonwebtoken')
 const router = express.Router();
 
 router.post('/register', async (req, res, next) => {
@@ -28,6 +28,15 @@ router.post('/login', async (req, res, next) => {
         if(!isMatch) {
             return res.status(400).send('잘못된 비밀번호입니다.')
         }
+
+        // token 생성하기
+        const payload = {
+            userId: user._id.toHexString(),
+        }
+
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        return res.json({ user, accessToken });
 
     } catch (err) {
         next(err)

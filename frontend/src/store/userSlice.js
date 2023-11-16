@@ -36,7 +36,7 @@ const userSlice = createSlice({
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(loginUser.fulfilled, (state) => {
+            .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.userData = action.payload;
                 state.isAuth = true;
