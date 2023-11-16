@@ -10,6 +10,9 @@ import Footer from './layout/Footer'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUser } from './store/thunkFunctions';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import ProtectedPage from './pages/ProtectedPage/ProtectedPage';
+import NotAuthRoutes from './components/NotAuthRoutes';
 
 
 function Layout() {
@@ -46,11 +49,22 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
+
         <Route index element={<LandingPage />} />
 
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
+        {/* 로그인 유저만 접속할 수 있는 경로 */}
+        <Route element={<ProtectedRoutes isAuth={isAuth} />}>
+          <Route path='/protected' element={<ProtectedPage />} />
+        </Route>
+
+        {/* 로그인 유저가 아니면 접속 불가한 경로 */}
+        <Route element={<NotAuthRoutes isAuth={isAuth} />}>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+        </Route>
+
       </Route>
+
     </Routes>
   )
 }
