@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../store/thunkFunctions';
 
 const NavItem = ({ mobile }) => {
     const routes = [
@@ -10,9 +11,14 @@ const NavItem = ({ mobile }) => {
     ]
 
     const isAuth = useSelector(state => state.user?.isAuth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-
+        dispatch(logoutUser())
+            .then(() => {
+                navigate('/login');
+            })
     }
 
   return (
