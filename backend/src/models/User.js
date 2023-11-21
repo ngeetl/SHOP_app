@@ -19,7 +19,15 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    image: String //중괄호 없이 바로 타입 입력 가능
+    image: String, //중괄호 없이 바로 타입 입력 가능
+    cart : {
+        type: Array,
+        default: []
+    },
+    history: {
+        type: Array,
+        default : []
+    },
 })
 
 userSchema.pre('save', async function(next) {
