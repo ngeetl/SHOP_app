@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
+import FileUpload from '../../components/FileUpload';
 
 const continents = [
   {key: 1, value: 'Africa'},
@@ -26,16 +27,19 @@ const UploadProductPage = () => {
   const userData = useSelector(state => state.user?.userData);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(userData);
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({
       ...prev,
       // name에 대괄호를 치는 것은 변수의 값을 속성 이름으로 사용한다는 뜻
       [name]: value
+    }))
+  }; 
+
+  const handleImages = (newImages) => {
+    setProduct((prev) => ({
+      ...prev,
+      images: newImages
     }))
   }; 
 
@@ -64,6 +68,9 @@ const UploadProductPage = () => {
         
         {/* 업로드 양식 */}
         <form className='mt-6' onSubmit={handleSubmit}>
+
+          <FileUpload images={product.images} onImageChange={handleImages} />
+
           <div className='mt-4'>
             <label htmlFor='title'>이름</label>
             <input className='w-full px-4 py-2 bg-white border rounded-md focus:outline-none focus:ring-2' 
