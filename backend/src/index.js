@@ -21,7 +21,9 @@ app.get('/', (req, res) => {
     res.send('Hello, world!');
 })
 
+// 라우트 미들웨어
 app.use('/users', require('./routes/users'));
+app.use('/products', require('./routes/products'));
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500);

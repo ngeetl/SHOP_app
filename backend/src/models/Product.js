@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
     writer: {
-        type: Schema.Types.ObjectId, // mongoDB에서 자동으로 할당되는 고유ID
+        type: mongoose.Schema.Types.ObjectId, // mongoDB에서 자동으로 할당되는 고유ID
         ref: 'User'
     },
     title: {
