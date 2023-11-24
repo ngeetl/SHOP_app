@@ -1,12 +1,31 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import axiosInstance from '../utils/axios';
 
 const FileUpload = ({ images, onImageChange }) => {
     
+    const handleDrop = async (files) => {
+        let formData = new FormData();
+
+        const config = {
+            // 'multipart/form-data': 데이터 파일 인코딩 유형
+            header: { 'content-type': 'multipart/form-data'}
+        };
+
+        formData.append('file', files[0]);
+
+        try {
+            const response = await axiosInstance.post('/products/image', formData, config);
+            onImageChange([...images, response.data.fileName])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className='flex gap-4'>
 
-            <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+            <Dropzone onDrop={handleDrop}>
             {({getRootProps, getInputProps}) => (
                 <section className='min-w-[300px] h-[300px] border flex items-center justify-center'>
                 <div {...getRootProps()} className='w-full h-full cursor-pointer flex justify-center items-center'>
