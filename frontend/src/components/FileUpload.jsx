@@ -1,5 +1,5 @@
-import React from 'react'
-import Dropzone from 'react-dropzone'
+import React from 'react';
+import Dropzone from 'react-dropzone';
 import axiosInstance from '../utils/axios';
 
 const FileUpload = ({ images, onImageChange }) => {
@@ -16,10 +16,17 @@ const FileUpload = ({ images, onImageChange }) => {
 
         try {
             const response = await axiosInstance.post('/products/image', formData, config);
-            onImageChange([...images, response.data.fileName])
+            onImageChange([...images, response.data.fileName]);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
+    }
+
+    const handleDelete = (image) => {
+        const currentIndex = images.indexOf(image);
+        let newImages = [...images];
+        newImages.splice(currentIndex, 1);
+        onImageChange(newImages);
     }
 
     return (
@@ -28,17 +35,17 @@ const FileUpload = ({ images, onImageChange }) => {
             <Dropzone onDrop={handleDrop}>
             {({getRootProps, getInputProps}) => (
                 <section className='min-w-[300px] h-[300px] border flex items-center justify-center'>
-                <div {...getRootProps()} className='w-full h-full cursor-pointer flex justify-center items-center'>
-                    <input {...getInputProps()} />
-                    <p className='text-3xl text-gray-400'>+</p>
-                </div>
+                    <div {...getRootProps()} className='w-full h-full cursor-pointer flex justify-center items-center'>
+                        <input {...getInputProps()} />
+                        <p className='text-3xl text-gray-400'>+</p>
+                    </div>
                 </section>
             )}
             </Dropzone>
 
             <div className='flex flex-grow items-center justify-center h-[300px] border overflow-x-scroll overflow-y-hidden'>
                 {images.map(image => (
-                    <div key={image}>
+                    <div key={image} onClick={(image)=>handleDelete(image)}>
                         <img className='min-w-[300px] h-[300px]'
                             src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
                             alt={image}/>

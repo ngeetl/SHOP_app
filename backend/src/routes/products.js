@@ -1,16 +1,41 @@
 const express = require('express');
 const Product = require('../models/Product');
 const router = express.Router();
+const multer = require('multer');
+const auth = require('../middleware/auth');
 
-router.post('/', async (req, res, next) => {
+
+const storage = multer.diskStorage({
+    // cb: callback -> cb(error, result)
+    destination: function(req, file, cb) {
+        cb(null, 'src/uploads/')
+    },  
+    filename: function(req, file, cb) {
+        cb(null, `${Date.now()}_${file.originalname}`)
+    }
+});
+
+const upload = multer({ storage: storage }).single("file");
+
+router.post('/', auth, async (req, res, next) => {
     try {
-        const porduct = new Product(req.body);
-        porduct.save();
+        const product = new Product(req.body);
+        await product.save();
 
         return res.sendStatus(201);
     } catch (err) {
         next(err);
     }
+});
+
+router.post('/image', auth, (req, res, next) => {
+    // 받아온 이미지 저장
+    upload(req, res, err => {
+        if(err) {
+            return res.status(500).send(err);
+        }
+        return res.json({ fileName: res.req.file.filename });
+    })
 });
 
 
