@@ -17,6 +17,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("file");
 
+router.get('/', async (req, res, next) => {
+    try {
+        const products = await Product.find().populate('writer');
+
+        return res.status(200).json({
+            products
+        })
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.post('/', auth, async (req, res, next) => {
     try {
         const product = new Product(req.body);
@@ -37,6 +49,7 @@ router.post('/image', auth, (req, res, next) => {
         return res.json({ fileName: res.req.file.filename });
     })
 });
+
 
 
 module.exports = router;
