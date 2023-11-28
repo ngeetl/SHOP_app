@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ImageSlider from '../../../components/ImageSlider';
 
 const CardItem = ({ product, key}) => {
   return (
     <div className='border-[1px] border-gray-300 m-2'>
+      <ImageSlider images={product.images} />
       <Link to={`/product/${product._id}`}>
         <p>{product.title}</p>
         <p>{product.continents}</p>
