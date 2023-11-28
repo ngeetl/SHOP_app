@@ -4,14 +4,14 @@ import RadioBox from './Sections/RadioBox'
 import SearchInput from './Sections/SearchInput'
 import CardItem from './Sections/CardItem'
 import axiosInstance from '../../utils/axios'
+import { continents } from '../../utils/filterData'
 
 const LandingPage = () => {
-
   const limit = 4;
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  const {filters, setFilters} = useState({
+  const [filters, setFilters] = useState({
     continents: [],
     price: []
   });
@@ -21,6 +21,7 @@ const LandingPage = () => {
   }, []);
 
 
+  // 게시물을 불러오는 로직
   const fetchProducts = async ({ skip, limit, loadMore=false, filters={}, searchTerm=""}) => {
     const params = {
       skip, // 게시물이 시작되는 순서
@@ -42,6 +43,7 @@ const LandingPage = () => {
     };
   }
 
+  // 더보기 버튼 게시물 요청 로직
   const handleLoadMore = () => {
     const body = {
       skip: skip + limit,
@@ -51,6 +53,26 @@ const LandingPage = () => {
     };
     fetchProducts(body);
     setSkip(skip + limit);
+  };
+
+  // 필터 로직
+  const handleFilters = (newFilteredData, category) => {
+    const newFilters = {...filters};
+    newFilters[category] = newFilteredData;
+
+    showFilteredResults(newFilters);
+    setFilters(newFilters);
+  };
+
+  const showFilteredResults = (filters) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters
+    };
+
+    fetchProducts(body);
+    setSkip(0);
   }
   
   return (
@@ -64,7 +86,11 @@ const LandingPage = () => {
       {/* Filter */}
       <div className='flex gap-3'>
         <div className='w-1/2 bg-yellow-100'>
-          <CheckBox />
+          <CheckBox 
+            continents={continents} 
+            checkedContinents={filters.continents} 
+            onFilters={filters => handleFilters(filters, "continents")}
+          />
         </div>
         <div className='w-1/2 bg-red-100'>
           <RadioBox />
