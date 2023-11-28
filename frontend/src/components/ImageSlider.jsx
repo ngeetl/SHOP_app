@@ -7,17 +7,13 @@ const ImageSlider = ({ images }) => {
   return (
     <Carousel autoPlay showThumbs={false} infiniteLoop>
       {images.map(image => (
-          <div key={image}>
+          <div key={image} className='overflow-hidden h-[150px]'>
             <img 
               src={`${import.meta.env.VITE_SERVER_URL}/${image}`} 
               alt={image}
-              className='w-full max-h-[150px]'/>
-            <p className="legend">Legend 1</p>
+              className='w-full h-full'/>
           </div>
       ))}
-
-
-
     </Carousel>
   )
 }

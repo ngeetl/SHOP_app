@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ImageSlider from '../../../components/ImageSlider';
 
-const CardItem = ({ product, key}) => {
+const CardItem = ({ product }) => {
   return (
     <div className='border-[1px] border-gray-300 m-2'>
       <ImageSlider images={product.images} />

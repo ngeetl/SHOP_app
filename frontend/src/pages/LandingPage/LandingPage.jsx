@@ -23,20 +23,36 @@ const LandingPage = () => {
 
   const fetchProducts = async ({ skip, limit, loadMore=false, filters={}, searchTerm=""}) => {
     const params = {
-      skip,
-      limit,
+      skip, // 게시물이 시작되는 순서
+      limit, // 게시물 마지막 순서
       filters,
       searchTerm
     };
     try {
       const response = await axiosInstance.get('/products', { params });
-      setProducts(response.data.products);
+
+      if(loadMore) {
+        setProducts([...products, ...response.data.products]);
+      } else {
+        setProducts(response.data.products);
+      }
+      setHasMore(response.data.hasMore);
     } catch (error) {
       console.error(error);
-    }
-
+    };
   }
 
+  const handleLoadMore = () => {
+    const body = {
+      skip: skip + limit,
+      limit,
+      loadMore: true,
+      filters
+    };
+    fetchProducts(body);
+    setSkip(skip + limit);
+  }
+  
   return (
     <section>
       
@@ -70,7 +86,9 @@ const LandingPage = () => {
       {/* LoadMore */}
       {hasMore &&
         <div className='flex justify-center mt-5'>
-          <button className='bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out'>
+          <button 
+            className='bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out'
+            onClick={handleLoadMore}>
             더 보기
           </button>
         </div>
