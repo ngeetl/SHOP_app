@@ -23,14 +23,23 @@ router.get('/', async (req, res, next) => {
     const limit = req.query.limit ? parseInt(req.query.limit) : 20;
     const skip = req.query.skip ? parseInt(req.query.skip) : 0;
 
+    let findArgs = {}; // 필터링 후 실제로 찾을 값
+    const filterObj = req.query.filters;
+
+    for(let key in filterObj) {
+        if(filterObj[key].length > 0) {
+            findArgs[key] = filterObj[key]
+        }
+    };
+
     try {
-        const products = await Product.find()
+        const products = await Product.find(findArgs)
             .populate('writer')
             .sort([[sortBy, order]])
             .skip(skip)
             .limit(limit)
 
-        const productsTotal = await Product.countDocuments();
+        const productsTotal = await Product.countDocuments(findArgs);
         const hasMore = skip + limit < productsTotal ? true : false;
 
         return res.status(200).json({
