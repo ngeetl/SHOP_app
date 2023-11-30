@@ -13,7 +13,7 @@ const CheckBox = ({ continents, checkedContinents, onFilters }) => {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
+    console.log(newChecked)
     onFilters(newChecked);
   }
 
