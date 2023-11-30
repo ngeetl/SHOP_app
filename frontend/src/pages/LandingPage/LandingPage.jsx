@@ -13,7 +13,7 @@ const LandingPage = () => {
   const [hasMore, setHasMore] = useState(false);
   const [filters, setFilters] = useState({
     continents: [],
-    prices: []
+    price: []
   });
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const LandingPage = () => {
     const newFilters = {...filters};
     newFilters[category] = newFilteredData;
 
-    if(category === "prices") {
+    if(category === "price") {
       const priceValues = handlePrice(newFilteredData);
       newFilters[category] = priceValues
     };
@@ -113,8 +113,8 @@ const LandingPage = () => {
         <div className='w-1/2 bg-red-100'>
           <RadioBox
             prices={prices}
-            checkedPrice={filters.prices}
-            onFilters={filters => handleFilters(filters, "prices")} />
+            checkedPrice={filters.price}
+            onFilters={filters => handleFilters(filters, "price")} />
         </div>
       </div>
 

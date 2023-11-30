@@ -28,8 +28,17 @@ router.get('/', async (req, res, next) => {
 
     for(let key in filterObj) {
         if(filterObj[key].length > 0) {
-            findArgs[key] = filterObj[key]
-        }
+            if(key === 'price') {
+                findArgs[key] = {
+                    // Greater than equal
+                    $gte: filterObj[key][0],
+                    // Less than equal
+                    $lte: filterObj[key][1]
+                };
+            } else {
+                findArgs[key] = filterObj[key];
+            }
+        };
     };
 
     try {
