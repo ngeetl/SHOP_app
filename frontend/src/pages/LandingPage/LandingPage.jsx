@@ -8,6 +8,7 @@ import { continents, prices } from '../../utils/filterData'
 
 const LandingPage = () => {
   const limit = 4;
+  const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -20,9 +21,6 @@ const LandingPage = () => {
     fetchProducts({ skip, limit });
   }, []);
 
-
-  console.log(filters)
-  
   // 게시물을 불러오는 로직
   const fetchProducts = async ({ skip, limit, loadMore=false, filters={}, searchTerm=""}) => {
     const params = {
@@ -51,7 +49,8 @@ const LandingPage = () => {
       skip: skip + limit,
       limit,
       loadMore: true,
-      filters
+      filters,
+      searchTerm
     };
     fetchProducts(body);
     setSkip(skip + limit);
@@ -86,11 +85,25 @@ const LandingPage = () => {
     const body = {
       skip: 0,
       limit,
-      filters
+      filters,
+      searchTerm
     };
 
     fetchProducts(body);
     setSkip(0);
+  }
+
+  // 검색 기능
+  const handleSearchTerm = (e) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: e.target.value
+    };
+    setSkip(0);
+    setSearchTerm(e.target.value);
+    fetchProducts(body);
   }
   
   return (
@@ -119,8 +132,8 @@ const LandingPage = () => {
       </div>
 
       {/* Search */}
-      <div className='flex justify-end bg-blue-100'>
-        <SearchInput />
+      <div className='flex justify-end bg-blue-100 mb-3'>
+        <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm}/>
       </div>
 
       {/* Card */}

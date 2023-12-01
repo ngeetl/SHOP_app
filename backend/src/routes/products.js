@@ -22,6 +22,7 @@ router.get('/', async (req, res, next) => {
     const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
     const limit = req.query.limit ? parseInt(req.query.limit) : 20;
     const skip = req.query.skip ? parseInt(req.query.skip) : 0;
+    const term = req.query.searchTerm
 
     let findArgs = {}; // 필터링 후 실제로 찾을 값
     const filterObj = req.query.filters;
@@ -40,6 +41,11 @@ router.get('/', async (req, res, next) => {
             }
         };
     };
+
+    if(term) {
+        findArgs["$text"] = {$search: term}
+    }
+    console.log(findArgs)
 
     try {
         const products = await Product.find(findArgs)
