@@ -4,7 +4,6 @@ const router = express.Router();
 const multer = require('multer');
 const auth = require('../middleware/auth');
 
-
 const storage = multer.diskStorage({
     // cb: callback -> cb(error, result)
     destination: function(req, file, cb) {
@@ -16,6 +15,24 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("file");
+
+router.get('/:id', async (req, res, next) => {
+    const type = req.query.type;
+    let procuctIds = req.params.id;
+
+    // DB에서 procuctId와 같은 상품의 정보를 불러오기
+    try {
+        const product = await Product.find({ _id: { $in: procuctIds} })
+        // $in : procuctIds 배열 값 중 하나와 일칠하는 모든 문서를 찾음
+            .populate('writer')
+
+        return res.status(200).send(product);
+
+    } catch (error) {
+        next(error);
+    }
+
+})
 
 router.get('/', async (req, res, next) => {
     const order = req.query.order ? req.query.order : 'desc';
@@ -45,7 +62,7 @@ router.get('/', async (req, res, next) => {
     if(term) {
         findArgs["$text"] = {$search: term}
     }
-    console.log(findArgs)
+    // console.log(findArgs)
 
     try {
         const products = await Product.find(findArgs)
