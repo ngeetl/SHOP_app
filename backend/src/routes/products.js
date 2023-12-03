@@ -20,10 +20,18 @@ router.get('/:id', async (req, res, next) => {
     const type = req.query.type;
     let procuctIds = req.params.id;
 
+    if(type === 'array') {
+        // prouctIds 쿼리 스트링이 이런식으로 옴 -> 424e2334,424e2334,3244e234
+        let ids = procuctIds.split(','); // = ['424e2334', '424e2334', '3244e234']
+        procuctIds = ids.map(id => {
+            return id
+        });
+    };
+
     // DB에서 procuctId와 같은 상품의 정보를 불러오기
     try {
         const product = await Product.find({ _id: { $in: procuctIds} })
-        // $in : procuctIds 배열 값 중 하나와 일칠하는 모든 문서를 찾음
+        // $in : procuctIds 배열 값 중 일치하는 모든 문서를 찾음
             .populate('writer')
 
         return res.status(200).send(product);
@@ -31,7 +39,6 @@ router.get('/:id', async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-
 })
 
 router.get('/', async (req, res, next) => {

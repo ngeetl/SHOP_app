@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { addToCart, authUser, loginUser, logoutUser, registerUser } from "./thunkFunctions";
+import { addToCart, authUser, getCartItems, loginUser, logoutUser, registerUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -99,7 +99,20 @@ const userSlice = createSlice({
                 state.error = action.payload;
                 toast.error(action.payload);
             })
-            
+
+            // getCartItems
+            .addCase(getCartItems.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getCartItems.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.cartDetail = action.payload;
+            })
+            .addCase(getCartItems.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+                toast.error(action.payload);
+            })            
     }
 })
 

@@ -83,3 +83,32 @@ export const addToCart = createAsyncThunk(
         }
     }
 )
+
+export const getCartItems = createAsyncThunk(
+    'user/getCartItems', //액션 고유 실별자
+    async ({ cartItemIds, userCart }, thunkAPI) => {
+        try {
+            const response = await axiosInstance.get(
+                `/products/${cartItemIds}?type=array`
+            ); // response => product DB 상세 정보
+
+            // cartItemIds => [2412w124, 1973e34, 7843a123]
+            // userCart => [{id: 2412w124, quantity:1, date}, {...}]
+            userCart.forEach(cartItem => {
+                response.data.forEach((productDetail, idx) => {
+                    if(cartItem.id === productDetail._id) {
+                        response.data[idx].quantity = cartItem.quantity;
+                    }
+                })
+            })
+            // 페이로드로 장바구니에 담긴 product들의 상세정보를 
+            // userData.cart의 quantity를 추가하여 반환하는 로직
+
+
+            return response.data; //페이로드
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
