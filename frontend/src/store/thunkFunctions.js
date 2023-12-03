@@ -24,7 +24,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await axiosInstance.post(
                 `/users/login`,
-                body
+                body // = { email, password }
             )
 
             return response.data; //페이로드
@@ -60,6 +60,23 @@ export const logoutUser = createAsyncThunk(
             )
             
             return response.data;
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
+
+export const addToCart = createAsyncThunk(
+    'user/addToCart', //액션 고유 실별자
+    async (body, thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/cart`,
+                body // = { productId: product._id }
+            )
+
+            return response.data; //페이로드
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue(error.response.data || error.message);

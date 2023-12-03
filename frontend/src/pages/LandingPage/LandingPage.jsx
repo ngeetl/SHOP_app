@@ -147,7 +147,7 @@ const LandingPage = () => {
       {hasMore &&
         <div className='flex justify-center mt-5'>
           <button 
-            className='bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out'
+            className='font-semibold bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out shadow-lg hover:shadow-xl'
             onClick={handleLoadMore}>
             더 보기
           </button>
