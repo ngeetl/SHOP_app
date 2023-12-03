@@ -23,6 +23,9 @@ const DetailProductPage = () => {
     fetchProduct();
   }, [productId]);
 
+  // product가 fetch되기 전 뜨는 오류 해결
+  if(!product) return null;
+
   return (
     <section>
 
@@ -36,12 +39,12 @@ const DetailProductPage = () => {
 
           {/* ProductImage */}
           <div className='w-1/2'>
-            <ProductImage />
+            <ProductImage product={product} />
           </div>
 
           {/* ProductInfo */}
           <div className='w-1/2'>
-            <ProductInfo />
+            <ProductInfo product={product} />
           </div>
 
       </div>

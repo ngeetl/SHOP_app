@@ -11,7 +11,7 @@ const FileUpload = ({ images, onImageChange }) => {
             // 'multipart/form-data': 데이터 파일 인코딩 유형
             header: { 'content-type': 'multipart/form-data'}
         };
-
+        console.log(files)
         formData.append('file', files[0]);
 
         try {
