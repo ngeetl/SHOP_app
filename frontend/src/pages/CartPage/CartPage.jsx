@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCartItems } from '../../store/thunkFunctions';
+import CartTable from './Sections/CartTable';
 
 const CartPage = () => {
 
@@ -38,28 +39,36 @@ const CartPage = () => {
     cartItems.map(item => total += item.price * item.quantity); 
     setTotalPrice(total);
   };
+
+  const handleRemoveCartItem = () => {
+
+  }
   
   return (
     <section>
 
-        {/* Header */}
-        <div className='text-center m-7'>
-          <h2 className='text-2xl'>장바구니</h2>
-        </div>
+      {/* Header */}
+      <div className='text-center m-7'>
+        <h2 className='text-2xl'>장바구니</h2>
+      </div>
+      
+      {cartDetail?.length > 0 ?
+      <>
+        {/* ProductLIst */}
+        <CartTable products={cartDetail} onRemoveItem={handleRemoveCartItem} />
 
-        {/* ProductList */}
-        {cartDetail?.length > 0 ?
-        <>
+        {/* Footer */}
         <div className='mt-10'>
           <p><span className='font-bold'>합계: </span>{totalPrice}원</p>
           <button className='bg-blue-500 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'>
             결제하기
           </button>
         </div>
-        </>
-        :
-        <p>장바구니가 비었습니다.</p>
-        }
+      </>
+      :
+      <p>장바구니가 비었습니다.</p>
+      }
+
     </section>
   )
 }
