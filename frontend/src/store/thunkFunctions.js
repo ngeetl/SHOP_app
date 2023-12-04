@@ -112,3 +112,32 @@ export const getCartItems = createAsyncThunk(
         }
     }
 )
+
+export const removeCartItem = createAsyncThunk(
+    'user/removeCartItem', //액션 고유 실별자
+    async (productId, thunkAPI) => {
+        try {
+            const response = await axiosInstance.delete(
+                `/users/cart?productId=${productId}`,
+                productId 
+            );
+
+            const userCart = response.data.userCart;
+            const productInfo = response.data.productInfo;
+
+            userCart.forEach(cartItem => {
+                productInfo.forEach((productDetail, idx) => {
+                    if(cartItem.id === productDetail._id) {
+                        // productInfo 배열 요소를 직접적으로 바꿔줌
+                        productInfo[idx].quantity = cartItem.quantity;
+                    }
+                })
+            })
+
+            return response.data; //페이로드
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)

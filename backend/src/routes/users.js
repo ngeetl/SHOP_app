@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
+const Product = require('../models/Product');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const router = express.Router();
@@ -88,6 +89,37 @@ router.post('/cart', auth, async (req, res, next) => {
         next(error);
     }
 });
+
+router.delete('/cart', auth, async (req, res, next) => {
+    try {
+        // 요청받은 상품 삭제하기
+        const userInfo = await User.findOneAndUpdate(
+            { _id: req.user._id},
+            {
+                "$pull": {
+                    "cart": { "id": req.query.productId }
+                }
+            },
+            { new: true }
+        );
+
+        const userCart = userInfo.cart;
+        const itemsArray = userCart.map(item => item.id);  
+
+        // 상품 삭제 후 남은 cart 제품 정보 불러오기 -> CartDetail 업데이트 하기 위함
+        const productInfo = await Product
+                .find({_id: {$in: itemsArray}})
+                .populate('writer');
+
+        return res.json({
+            productInfo,
+            userCart
+        });
+
+    } catch (error) {
+        next(error);
+    }
+})
 
 router.get('/auth', auth, async (req, res, next) => {
     return res.json({
