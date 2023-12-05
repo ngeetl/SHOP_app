@@ -26,7 +26,6 @@ const NavItem = ({ mobile }) => {
             })
     };
 
-
   return (
     <ul className={`text-md flex justify-center items-center w-full gap-4 ${mobile && 'flex-col bg-orange-500'}`}>
         {routes.map(({ to, name, auth, icon }) => {
@@ -46,7 +45,7 @@ const NavItem = ({ mobile }) => {
                         {icon}
                         <span className='absolute top-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white
                             bg-green-500 border-2 border-white rounded-full -right-2'>
-                            {cart.length}
+                            {cart?.length}
                         </span>
                     </Link>
                 </li>
