@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCartItems, removeCartItem } from '../../store/thunkFunctions';
+import { getCartItems, payProducts, removeCartItem } from '../../store/thunkFunctions';
 import CartTable from './Sections/CartTable';
 
 const CartPage = () => {
@@ -30,6 +30,8 @@ const CartPage = () => {
     }
   }, [dispatch, userData]);
 
+
+  // 장바구니 합계
   useEffect(() => {
     calculateTotal(cartDetail);
   }, [cartDetail]);
@@ -40,9 +42,16 @@ const CartPage = () => {
     setTotalPrice(total);
   };
 
+  // 장바구니 상품 삭제
   const handleRemoveCartItem = (productId) => {
     dispatch(removeCartItem(productId));
-  }
+  };
+
+  // 결제
+  const handlePaymentClick = () => {
+    dispatch(payProducts({ cartDetail }));
+  };
+
   
   return (
     <section>
@@ -60,7 +69,10 @@ const CartPage = () => {
         {/* Footer */}
         <div className='mt-10'>
           <p><span className='font-bold'>합계: </span>{totalPrice}원</p>
-          <button className='bg-blue-500 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'>
+          <button 
+            className='mt-5 bg-blue-500 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'
+            onClick={handlePaymentClick}
+            >
             결제하기
           </button>
         </div>

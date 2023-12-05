@@ -141,3 +141,20 @@ export const removeCartItem = createAsyncThunk(
         }
     }
 )
+
+export const payProducts = createAsyncThunk(
+    'user/payProducts', //액션 고유 실별자
+    async (body, thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                '/users/payment',
+                body 
+            );
+
+            return response.data; //페이로드
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)

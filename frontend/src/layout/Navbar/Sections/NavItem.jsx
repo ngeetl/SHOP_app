@@ -14,6 +14,7 @@ const NavItem = ({ mobile }) => {
         {to: '/user/cart', name: '장바구니', auth: true, icon: <AiOutlineShoppingCart style={{ fontSize: '1.4rem' }} />},
     ]
 
+    const cart = useSelector(state => state.user?.userData?.cart);
     const isAuth = useSelector(state => state.user?.isAuth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,7 +24,8 @@ const NavItem = ({ mobile }) => {
             .then(() => {
                 navigate('/login');
             })
-    }
+    };
+
 
   return (
     <ul className={`text-md flex justify-center items-center w-full gap-4 ${mobile && 'flex-col bg-orange-500'}`}>
@@ -44,7 +46,7 @@ const NavItem = ({ mobile }) => {
                         {icon}
                         <span className='absolute top-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white
                             bg-green-500 border-2 border-white rounded-full -right-2'>
-                            {1}
+                            {cart.length}
                         </span>
                     </Link>
                 </li>
