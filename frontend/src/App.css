@@ -1,1 +1,33 @@
 @import "react-image-gallery/styles/css/image-gallery.css";
+
+@keyframes buttonSlide {
+    0% {
+        width: 150px;
+    }
+    100% {
+        width: 90%;
+        background: rgb(243 244 246);
+        color: rgb(107 114 128);
+    }
+}
+
+@keyframes searchSlide {
+    0% {
+        opacity: 0;
+        width: 100px;
+    }
+    100% {
+        opacity: 1;
+        width: 100%;
+
+    }
+}
+
+#buttonSlide {
+    animation: buttonSlide .8s ease-in-out forwards;
+}
+
+#searchSlide {
+    animation: searchSlide .8s ease-in-out forwards;
+}
+

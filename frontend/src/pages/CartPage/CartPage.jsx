@@ -49,8 +49,24 @@ const CartPage = () => {
 
   // 결제
   const handlePaymentClick = () => {
+    // serverAuth();
     dispatch(payProducts({ cartDetail }));
   };
+
+  // function serverAuth () {
+  //   AUTHNICE.requestPay({
+  //     clientId: 'S2_01b70ae4ee684157bef7f3be1563bafc',
+  //     method: 'card',
+  //     orderId: '1edee4b-0700-4a31-a7af-ef30e93b83a1',
+  //     amount: 1004,
+  //     goodsName: '나이스페이-상품',
+  //     returnUrl: 'http://localhost:4000/users/payment', //API를 호출할 Endpoint 입력
+  //     fnError: function (result) {
+  //       alert('개발자확인용 : ' + result.errorMsg + '')
+  //     }
+  //  });
+  // }
+   
 
   
   return (

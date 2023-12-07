@@ -1,31 +1,31 @@
-const continents = [
+const category = [
     {
         "_id": 1,
-        "name": "Afirca"
+        "name": "여성의류"
     },
     {
         "_id": 2,
-        "name": "Europt"
+        "name": "남성의류"
     },
     {
         "_id": 3,
-        "name": "Asia"
+        "name": "잡화"
     },
     {
         "_id": 4,
-        "name": "North America"
+        "name": "생활가전"
     },
     {
         "_id": 5,
-        "name": "South America"
+        "name": "뷰티"
     },
     {
         "_id": 6,
-        "name": "Australia"
+        "name": "도서"
     },
     {
         "_id": 7,
-        "name": "Antarctica"
+        "name": "반려동물용품"
     },
 ];
 
@@ -63,6 +63,6 @@ const prices = [
 ];
 
 export {
-    continents,
+    category,
     prices
 }

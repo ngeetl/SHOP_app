@@ -4,14 +4,14 @@ import axiosInstance from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import FileUpload from '../../components/FileUpload';
 
-const continents = [
-  {key: 1, value: 'Africa'},
-  {key: 2, value: 'Europe'},
-  {key: 3, value: 'Asia'},
-  {key: 4, value: 'North America'},
-  {key: 5, value: 'South America'},
-  {key: 6, value: 'Australia'},
-  {key: 7, value: 'Antarctica'},
+const category = [
+  {key: 1, value: '여성의류'},
+  {key: 2, value: '남성의류'},
+  {key: 3, value: '잡화'},
+  {key: 4, value: '생활가전'},
+  {key: 5, value: '뷰티'},
+  {key: 6, value: '도서'},
+  {key: 7, value: '반려동물용품'},
 ]
 
 const UploadProductPage = () => {
@@ -20,7 +20,7 @@ const UploadProductPage = () => {
     title: '',
     description: '',
     price: 0,
-    continents: 1,
+    category: 1,
     images: []
   });
 
@@ -87,10 +87,10 @@ const UploadProductPage = () => {
               name='price' id='price' type='number' onChange={handleChange} value={product.price} />
           </div>
           <div className='mt-4'>
-            <label htmlFor='continents'>지역</label>
+            <label htmlFor='category'>카테고리</label>
             <select className='w-full px-4 py-2 bg-white border rounded-md focus:outline-none focus:ring-2'
-              name='continents' id='continents' onChange={handleChange} value={product.continents} >
-              {continents.map(continent => (
+              name='category' id='category' onChange={handleChange} value={product.category} >
+              {category.map(continent => (
                 <option key={continent.value} value={continent.key}>{continent.value}</option>
               ))}
             </select>

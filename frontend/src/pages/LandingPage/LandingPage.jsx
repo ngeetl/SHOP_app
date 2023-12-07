@@ -4,7 +4,7 @@ import RadioBox from './Sections/RadioBox'
 import SearchInput from './Sections/SearchInput'
 import CardItem from './Sections/CardItem'
 import axiosInstance from '../../utils/axios'
-import { continents, prices } from '../../utils/filterData'
+import { category, prices } from '../../utils/filterData'
 
 const LandingPage = () => {
   const limit = 4;
@@ -13,7 +13,7 @@ const LandingPage = () => {
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [filters, setFilters] = useState({
-    continents: [],
+    category: [],
     price: []
   });
 
@@ -57,13 +57,13 @@ const LandingPage = () => {
   };
 
   // 필터 로직
-  const handleFilters = (newFilteredData, category) => {
+  const handleFilters = (newFilteredData, type) => {
     const newFilters = {...filters};
-    newFilters[category] = newFilteredData;
+    newFilters[type] = newFilteredData;
 
-    if(category === "price") {
+    if(type === "price") {
       const priceValues = handlePrice(newFilteredData);
-      newFilters[category] = priceValues
+      newFilters[type] = priceValues
     };
 
     showFilteredResults(newFilters);
@@ -99,10 +99,9 @@ const LandingPage = () => {
       skip: 0,
       limit,
       filters,
-      searchTerm: e.target.value
+      searchTerm
     };
     setSkip(0);
-    setSearchTerm(e.target.value);
     fetchProducts(body);
   }
   
@@ -114,26 +113,26 @@ const LandingPage = () => {
         <h2 className='text-2xl'>여행 상품 사이트</h2>
       </div>
 
+      {/* Search */}
+      <div className='flex justify-end mb-3 pb-4 border-b'>
+        <SearchInput setSearch={(value) => setSearchTerm(value)} searchTerm={searchTerm} onSearch={handleSearchTerm}/>
+      </div>
+
       {/* Filter */}
-      <div className='flex gap-3'>
-        <div className='w-1/2 bg-yellow-100'>
+      <div className='flex gap-3 border-b border-gray-300'>
+        <div className='w-1/2'>
           <CheckBox 
-            continents={continents} 
-            checkedContinents={filters.continents} 
-            onFilters={filters => handleFilters(filters, "continents")}
+            category={category} 
+            checkedCategory={filters.category} 
+            onFilters={filters => handleFilters(filters, "category")}
           />
         </div>
-        <div className='w-1/2 bg-red-100'>
+        <div className='w-1/2'>
           <RadioBox
             prices={prices}
             checkedPrice={filters.price}
             onFilters={filters => handleFilters(filters, "price")} />
         </div>
-      </div>
-
-      {/* Search */}
-      <div className='flex justify-end bg-blue-100 mb-3'>
-        <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm}/>
       </div>
 
       {/* Card */}

@@ -5,8 +5,10 @@ const Payment = require('../models/Payment');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const router = express.Router();
-const crypto = require('crypto');
 const async = require('async');
+const crypto = require('crypto');
+const https = require('https');
+const axios = require('axios');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -47,6 +49,30 @@ router.post('/login', async (req, res, next) => {
         next(err)
     }
 });
+
+// router.post('/payment', async (req, res, next) => {
+//     const clientId = process.env.NICEPAY_CLIENT_ID;
+//     const secretKey = process.env.NICEPAY_SECRET_KEY;
+//     const authHeader = Buffer.from(clientId + ":" + secretKey).toString("base64");
+
+//     try {
+//         const response = await axios.post(`https://sandbox-api.nicepay.co.kr/v1/payments/${req.body.tid}`, {
+//             amount: req.body.amount
+//         }, {
+//             headers: {
+//                 Authorization: `Basic ${authHeader}`,
+//                 "Content-Type": "application/json"
+//             }
+//         });
+
+//         console.log(response.data);
+//         // 결제 비즈니스 로직 구현
+//         res.json({ resultMsg: response.data.resultMsg });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// });
 
 router.post('/cart', auth, async (req, res, next) => {
     try {
