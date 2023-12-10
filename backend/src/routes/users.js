@@ -150,6 +150,29 @@ router.delete('/cart', auth, async (req, res, next) => {
     }
 })
 
+router.delete('/item', auth, async (req, res, next) => {
+    try {
+        // 요청받은 상품 삭제하기
+        await Product.deleteOne({ "_id": req.query.productId });
+
+        // 유저의 장바구니 업데이트
+        await User.findOneAndUpdate(
+            { _id: req.user._id},
+            {
+                "$pull": {
+                    "cart": { "id": req.query.productId }
+                }
+            },
+            { new: true }
+        );
+
+        return res.status(200);
+
+    } catch (error) {
+        next(error);
+    }
+})
+
 router.get('/auth', auth, async (req, res, next) => {
     return res.json({
         id: req.user._id,

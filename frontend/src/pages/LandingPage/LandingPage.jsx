@@ -7,7 +7,7 @@ import axiosInstance from '../../utils/axios'
 import { category, prices } from '../../utils/filterData'
 
 const LandingPage = () => {
-  const limit = 4;
+  const limit = 8;
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
@@ -110,7 +110,7 @@ const LandingPage = () => {
       
       {/* Header */}
       <div className='text-center m-7'>
-        <h2 className='text-2xl'>여행 상품 사이트</h2>
+        {/* <h2 className='text-2xl'>여행 상품 사이트</h2> */}
       </div>
 
       {/* Search */}
@@ -119,7 +119,7 @@ const LandingPage = () => {
       </div>
 
       {/* Filter */}
-      <div className='flex gap-3 border-b border-gray-300'>
+      <div className='flex gap-3'>
         <div className='w-1/2'>
           <CheckBox 
             category={category} 
@@ -136,7 +136,7 @@ const LandingPage = () => {
       </div>
 
       {/* Card */}
-      <div className='grid grid-cols-2 sm:grid-cols-4 bg-green-100'>
+      <div className='grid grid-cols-2 sm:grid-cols-4'>
         {products.map(product => 
           <CardItem product={product} key={product._id}/>
           )}
@@ -146,7 +146,7 @@ const LandingPage = () => {
       {hasMore &&
         <div className='flex justify-center mt-5'>
           <button 
-            className='font-semibold bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out shadow-lg hover:shadow-xl'
+            className='bg-blue-500 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'
             onClick={handleLoadMore}>
             더 보기
           </button>

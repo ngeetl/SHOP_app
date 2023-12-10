@@ -10,16 +10,16 @@ const Navbar = () => {
   } 
 
   return (
-    <section className='relative z-10 bg-orange-500 text-white'>
+    <section className='bg-gradient-to-r from-blue-500 to-purple-500 p-5 text-white relative'>
       <div className='w-full'>
         
-        <div className='flex items-center justify-between mx-5 sm:mx-10 lg:mx-20'>
+        <div id='font' className='font-medium flex items-center justify-between mx-5 sm:mx-10 lg:mx-20'>
           {/* logo */}
-          <div className='flex items-center text-3xl h-16 font-semibold'>
-            <Link to="/">Logo</Link>
+          <div className='flex items-center text-5xl h-24 font-extrabold'>
+            <Link to="/">FULL</Link>
           </div>
           {/* menu button */}
-          <div className='text-2xl sm:hidden'>
+          <div className='text-3xl sm:hidden'>
             <button onClick={handleMeun}>{menu ? "-" : "+"}</button>
           </div>
           {/* big screen nav-items */}

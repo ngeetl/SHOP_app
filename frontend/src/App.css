@@ -1,4 +1,5 @@
 @import "react-image-gallery/styles/css/image-gallery.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Batang:wght@400;700&family=Rajdhani:wght@300;400&display=swap');
 
 @keyframes buttonSlide {
     0% {
@@ -31,3 +32,10 @@
     animation: searchSlide .8s ease-in-out forwards;
 }
 
+body {
+    font-family: 'monospace', sans-serif;
+}
+
+#font {
+    font-family: 'Rajdhani', sans-serif;
+}

@@ -84,6 +84,23 @@ export const addToCart = createAsyncThunk(
     }
 )
 
+export const removeItem = createAsyncThunk(
+    'user/removeItem', //액션 고유 실별자
+    async ({ productId }, thunkAPI) => {
+        try {
+            const response = await axiosInstance.delete(
+                `/users/item?productId=${productId}`,
+                productId 
+            );
+
+            return response.data; //페이로드
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+)
+
 export const getCartItems = createAsyncThunk(
     'user/getCartItems', //액션 고유 실별자
     async ({ cartItemIds, userCart }, thunkAPI) => {

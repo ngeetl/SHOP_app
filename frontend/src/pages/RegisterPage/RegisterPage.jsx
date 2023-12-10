@@ -44,14 +44,14 @@ const RegisterPage = () => {
     <section className='flex flex-col justify-center mt-20 max-w-[500px] m-auto'>
       <div className='p-10 bg-white rounded-md shadow-md border-t-[1px]'>
         <h1 className='text-3xl font-semibold text-center mb-4'>
-          회원가입
+          {/* 회원가입 */}
         </h1>
         <form className='mb-6' onSubmit={handleSubmit(onSubmit)}>
-          <div className='mb-2'>
+          <div className='mb-6'>
             <label
               htmlFor='email'
-              className='text-lg font-semibold text-gray-800'
-            >Email</label>
+              className='text-lg font-semibold text-gray-400'
+            >이메일</label>
             <input 
               type='email'
               id='email'
@@ -70,8 +70,8 @@ const RegisterPage = () => {
           <div className='mb-2'>
             <label
               htmlFor='name'
-              className='text-lg font-semibold text-gray-800'
-            >Name</label>
+              className='text-lg font-semibold text-gray-400'
+            >이름</label>
             <input 
               type='text'
               id='name'
@@ -90,8 +90,8 @@ const RegisterPage = () => {
           <div className='mb-2'>
             <label
               htmlFor='pw'
-              className='text-lg font-semibold text-gray-800'
-            >Password</label>
+              className='text-lg font-semibold text-gray-400'
+            >비밀번호</label>
             <input 
               type='password'
               id='pw'
@@ -109,7 +109,10 @@ const RegisterPage = () => {
           </div>
 
           <div className='mt-6'>
-            <button type='submit' className='w-full bg-black text-white py-2 px-4 rounded-md hover:bg-orange-700 duration-200'>
+            <button 
+              type='submit' 
+              className='w-full mt-5 text-lg bg-blue-500 text-white font-semibold py-3 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'
+              >
               회원가입
             </button>
           </div>
@@ -117,7 +120,7 @@ const RegisterPage = () => {
             가입한 아이디가 있으신가요? 
             <a
               href='/login'
-              className='font-semibold hover:text-orange-800'
+              className='font-semibold hover:text-blue-600'
             > 로그인</a>
           </p>
 

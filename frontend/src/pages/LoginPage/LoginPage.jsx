@@ -37,16 +37,16 @@ const LoginPage = () => {
 
   return (
     <section className='flex flex-col justify-center mt-20 max-w-[500px] m-auto'>
-      <div className='p-10 bg-white rounded-md shadow-md border-t-[1px]'>
+      <div className='p-10 pt-12 bg-white rounded-md shadow-md border-t-[1px]'>
         <h1 className='text-3xl font-semibold text-center mb-4'>
-          로그인
+          {/* 로그인 */}
         </h1>
         <form className='mb-6' onSubmit={handleSubmit(onSubmit)}>
-          <div className='mb-2'>
+          <div className='mb-6'>
             <label
               htmlFor='email'
-              className='text-lg font-semibold text-gray-800'
-            >Email</label>
+              className='text-lg font-semibold text-gray-500'
+            >이메일</label>
             <input 
               type='email'
               id='email'
@@ -65,8 +65,8 @@ const LoginPage = () => {
           <div className='mb-2'>
             <label
               htmlFor='pw'
-              className='text-lg font-semibold text-gray-800'
-            >Password</label>
+              className='text-lg font-semibold text-gray-500'
+            >비밀번호</label>
             <input 
               type='password'
               id='pw'
@@ -84,7 +84,9 @@ const LoginPage = () => {
           </div>
 
           <div className='mt-6'>
-            <button type='submit' className='w-full bg-black text-white py-2 px-4 rounded-md hover:bg-orange-700 duration-200'>
+            <button 
+              type='submit' 
+              className='w-full mt-5 text-lg bg-blue-500 text-white font-semibold py-3 px-5 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-600 hover:shadow-xl'>
               로그인
             </button>
           </div>
@@ -92,7 +94,7 @@ const LoginPage = () => {
             가입한 아이디가 없으신가요? 
             <a
               href='/register'
-              className='font-semibold hover:text-orange-800'
+              className='font-semibold hover:text-blue-600'
             > 회원가입</a>
           </p>
 

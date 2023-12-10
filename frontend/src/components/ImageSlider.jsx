@@ -7,11 +7,11 @@ const ImageSlider = ({ images }) => {
   return (
     <Carousel autoPlay showThumbs={false} infiniteLoop>
       {images.map(image => (
-          <div key={image} className='overflow-hidden h-[150px]'>
+          <div key={image}>
             <img 
               src={`${import.meta.env.VITE_SERVER_URL}/${image}`} 
               alt={image}
-              className='w-full h-full'/>
+              className='w-full h-full rounded-lg'/>
           </div>
       ))}
     </Carousel>

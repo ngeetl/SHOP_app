@@ -19,7 +19,7 @@ const UploadProductPage = () => {
   const [product, setProduct] = useState({
     title: '',
     description: '',
-    price: 0,
+    price: '',
     category: 1,
     images: []
   });
@@ -90,8 +90,8 @@ const UploadProductPage = () => {
             <label htmlFor='category'>카테고리</label>
             <select className='w-full px-4 py-2 bg-white border rounded-md focus:outline-none focus:ring-2'
               name='category' id='category' onChange={handleChange} value={product.category} >
-              {category.map(continent => (
-                <option key={continent.value} value={continent.key}>{continent.value}</option>
+              {category.map(category => (
+                <option key={category.value} value={category.key}>{category.value}</option>
               ))}
             </select>
           </div>

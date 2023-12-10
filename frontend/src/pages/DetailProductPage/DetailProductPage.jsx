@@ -29,21 +29,16 @@ const DetailProductPage = () => {
   return (
     <section>
 
-      {/* Header */}
-      <div className='text-center'>
-        <h1 className='p-4 text-2xl'>{product.title}</h1>
-      </div>
-
       {/* Detail */}
-      <div className='flex gap-4'>
+      <div className='flex gap-12 my-[130px]'>
 
           {/* ProductImage */}
-          <div className='w-1/2'>
+          <div className='w-[40%] mr-10'>
             <ProductImage product={product} />
           </div>
 
           {/* ProductInfo */}
-          <div className='w-1/2'>
+          <div className='w-[55%] h-full'>
             <ProductInfo product={product} />
           </div>
 
