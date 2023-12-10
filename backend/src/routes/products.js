@@ -3,7 +3,9 @@ const Product = require('../models/Product');
 const router = express.Router();
 const multer = require('multer');
 const auth = require('../middleware/auth');
+const fs = require("fs");
 
+// multer 설정
 const storage = multer.diskStorage({
     // cb: callback -> cb(error, result)
     destination: function(req, file, cb) {
@@ -15,6 +17,35 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("file");
+
+//  uploads 이미지 저장
+router.post('/image', auth, (req, res, next) => {
+    upload(req, res, err => {
+        if(err) {
+            return res.status(500).send(err);
+        }
+        return res.json({ fileName: res.req.file.filename });
+    })
+});
+
+// uploads 이미지 삭제
+router.delete("/image", async (req, res) => {
+
+    const imageFile = req.query.image;
+    
+    if (fs.existsSync("src/uploads/" + imageFile)) {
+      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+      try {
+        fs.unlinkSync("src/uploads/" + imageFile);
+        console.log("image delete", imageFile);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+ 
+    return res.status(200);
+
+  });
 
 router.get('/:id', async (req, res, next) => {
     const type = req.query.type;
@@ -99,16 +130,6 @@ router.post('/', auth, async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-});
-
-router.post('/image', auth, (req, res, next) => {
-    // 받아온 이미지 저장
-    upload(req, res, err => {
-        if(err) {
-            return res.status(500).send(err);
-        }
-        return res.json({ fileName: res.req.file.filename });
-    })
 });
 
 

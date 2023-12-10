@@ -16,8 +16,8 @@ const SearchInput = ({ setSearch, onSearch, searchTerm }) => {
   return (
     <>
     <input 
-      className='p-2 px-6 border border-gray-300 rounded-full w-full
-       bg-gray-100 focus:outline-none focus:ring'
+      className='p-3 px-6 border border-gray-300 rounded-full w-full
+       bg-gray-100 focus:outline-none focus:ring mb-2'
       type='text'
       placeholder='찾으시는 중고 제품을 검색하세요.'
       onChange={(e) => setSearch(e.target.value)}

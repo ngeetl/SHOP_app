@@ -106,7 +106,7 @@ const LandingPage = () => {
   }
   
   return (
-    <section>
+    <section className='my-12'>
       
       {/* Header */}
       <div className='text-center m-7'>

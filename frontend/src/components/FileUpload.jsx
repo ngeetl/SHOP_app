@@ -11,7 +11,6 @@ const FileUpload = ({ images, onImageChange }) => {
             // 'multipart/form-data': 데이터 파일 인코딩 유형
             header: { 'content-type': 'multipart/form-data'}
         };
-        console.log(files)
         formData.append('file', files[0]);
 
         try {
@@ -22,11 +21,13 @@ const FileUpload = ({ images, onImageChange }) => {
         }
     }
 
-    const handleDelete = (image) => {
+    const handleDelete = async (image) => {
         const currentIndex = images.indexOf(image);
         let newImages = [...images];
         newImages.splice(currentIndex, 1);
         onImageChange(newImages);
+        
+        await axiosInstance.delete(`/products/image?image=${image}`);
     }
 
     return (
@@ -45,7 +46,7 @@ const FileUpload = ({ images, onImageChange }) => {
 
             <div className='flex flex-grow items-center justify-center h-[300px] border overflow-x-scroll overflow-y-hidden'>
                 {images.map(image => (
-                    <div key={image} onClick={(image)=>handleDelete(image)}>
+                    <div key={image} onClick={() => handleDelete(image)}>
                         <img className='min-w-[300px] h-[300px]'
                             src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
                             alt={image}/>

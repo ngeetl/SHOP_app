@@ -13,7 +13,6 @@ const DetailProductPage = () => {
     async function fetchProduct() {
       try {
         const response = await axiosInstance.get(`/products/${productId}?type=single`);
-        console.log(response);
         setProduct(response.data[0]);
       } catch (error) {
         console.log(error);

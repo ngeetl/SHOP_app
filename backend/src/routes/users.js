@@ -8,7 +8,9 @@ const router = express.Router();
 const async = require('async');
 const crypto = require('crypto');
 const https = require('https');
+const fs = require("fs");
 const axios = require('axios');
+
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -152,6 +154,21 @@ router.delete('/cart', auth, async (req, res, next) => {
 
 router.delete('/item', auth, async (req, res, next) => {
     try {
+        //  요청받은 상품 이미지 파일 삭제하기
+        const deleteProduct = await Product.findOne({ _id: req.query.productId });
+
+        deleteProduct.images.forEach(image => {
+            console.log(image)
+            if(fs.existsSync('src/uploads/' + image)) {
+                try {
+                    fs.unlinkSync('src/uploads/' + image);
+                     console.log("image delete", image);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+
         // 요청받은 상품 삭제하기
         await Product.deleteOne({ "_id": req.query.productId });
 
