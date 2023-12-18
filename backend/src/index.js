@@ -5,16 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const port = 4000;
-const axios = require('axios');
-
-var createError = require('http-errors');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-
-app.use(logger('dev'));
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// const axios = require('axios');
 
 const corsOptions = {
     origin: [
