@@ -30,9 +30,11 @@ const userSchema = mongoose.Schema({
     },
 })
 
+// user의 비밀번호를 암호화하여 저장
 userSchema.pre('save', async function(next) {
     let user = this;
 
+    // 새 사용자가 생성되거나 기존 사용자가 비밀번호를 변경하였는지 확인
     if(user.isModified('password')) {
         const salt = await bcrypt.genSalt(10); // 괄호 안의 숫자는 복잡도
         const hash = await bcrypt.hash(user.password, salt);
@@ -42,10 +44,10 @@ userSchema.pre('save', async function(next) {
     next();
 })
 
+// user 로그인시 입력한 비밀번호와 hash된 비밀번호를 확인
 userSchema.methods.comparePassword = async function(plainPassword) {
     let user = this; // 요청한 유저의 데이터베이스 정보
-    console.log(user);
-    const match = await bcrypt.compare(plainPassword, user.password);
+    const match = await bcrypt.compare(plainPassword, user.password); 
     
     return match; // true 또는 false
 }

@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
             return res.status(400).send("존재하지 않는 이메일입니다.")
         }
 
-        // 비밀번호가 올바른지 체크
+        // 비밀번호가 올바른지 체크 userSchema.methods.comparePassword
         const isMatch = await user.comparePassword(req.body.password);
 
         if(!isMatch) {
@@ -53,12 +53,12 @@ router.post('/login', async (req, res, next) => {
 });
 
 // router.post('/payment', async (req, res, next) => {
-//     const clientId = process.env.NICEPAY_CLIENT_ID;
-//     const secretKey = process.env.NICEPAY_SECRET_KEY;
+//     const clientId = "ea78caffee1443e98f92ef552dacc8ca"	;
+//     const secretKey = "aaf26d2899e844f381ebfb65cc660120	";
 //     const authHeader = Buffer.from(clientId + ":" + secretKey).toString("base64");
-
 //     try {
 //         const response = await axios.post(`https://sandbox-api.nicepay.co.kr/v1/payments/${req.body.tid}`, {
+            
 //             amount: req.body.amount
 //         }, {
 //             headers: {
@@ -67,14 +67,25 @@ router.post('/login', async (req, res, next) => {
 //             }
 //         });
 
-//         console.log(response.data);
+//         console.log(req.body)
+//         console.log(req.body.tid)
+
 //         // 결제 비즈니스 로직 구현
+
 //         res.json({ resultMsg: response.data.resultMsg });
 //     } catch (error) {
 //         console.error(error);
 //         res.status(500).json({ message: "Internal Server Error" });
 //     }
 // });
+
+router.post("/hook", function (req, res) {
+    console.log(req.body);
+    if(req.body.resultCode == "0000"){
+      res.status(200).send('ok');
+    }
+    res.status(500).send('fail');
+  });
 
 router.post('/cart', auth, async (req, res, next) => {
     try {
@@ -158,7 +169,6 @@ router.delete('/item', auth, async (req, res, next) => {
         const deleteProduct = await Product.findOne({ _id: req.query.productId });
 
         deleteProduct.images.forEach(image => {
-            console.log(image)
             if(fs.existsSync('src/uploads/' + image)) {
                 try {
                     fs.unlinkSync('src/uploads/' + image);
