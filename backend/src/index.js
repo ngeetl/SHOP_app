@@ -9,7 +9,7 @@ const port = 4000;
 
 const corsOptions = {
     origin: [
-        "http://localhost:4000",  // 추가로 넣고 싶은 origin 작성
+        "http://localhost:5173",  // 추가로 넣고 싶은 origin 작성
         "https://d3idixhyot0xmi.cloudfront.net",  // 이 부분 중요!!!
     ]
 };
